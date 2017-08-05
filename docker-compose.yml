@@ -1,0 +1,16 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:3.6.10-alpine
+    ports:
+      - 5672:5672
+
+  worker:
+    build: .
+    command: celery -A tasks worker -B --loglevel=DEBUG
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
+    volumes:
+      - .:/app

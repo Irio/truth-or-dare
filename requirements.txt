@@ -1,0 +1,5 @@
+celery==4.1.0
+feedparser==5.2.1
+google-cloud-datastore==1.2.0
+pandas==0.20.3
+vcrpy==1.11.1
