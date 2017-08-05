@@ -2,15 +2,15 @@ version: "3"
 services:
   rabbitmq:
     image: rabbitmq:3.6.10-alpine
-    ports:
-      - 5672:5672
+    expose:
+      - "5672"
+    restart: unless-stopped
 
   worker:
     build: .
-    command: celery -A tasks worker -B --loglevel=DEBUG
+    command: celery -A tasks worker -B
     depends_on:
       - rabbitmq
     environment:
       - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
-    volumes:
-      - .:/app
+    restart: unless-stopped
