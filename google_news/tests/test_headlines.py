@@ -8,7 +8,7 @@ import pandas as pd
 import vcr
 
 
-class TestStringMethods(TestCase):
+class TestHeadlines(TestCase):
     def setUp(self):
         self.datastore_client = MagicMock()
         self.subject = subject_class(datastore_client=self.datastore_client)

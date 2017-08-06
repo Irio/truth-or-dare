@@ -8,9 +8,22 @@ services:
 
   worker:
     build: .
-    command: celery -A tasks worker -B
+    command: celery -A tasks worker -B -s /tmp/celerybeat-schedule
     depends_on:
       - rabbitmq
     environment:
       - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  scheduler:
+    build: .
+    command: celery -A tasks beat -s /tmp/celerybeat-schedule --pidfile=/tmp/celerybeat.pid
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
+    env_file:
+      - .env
     restart: unless-stopped

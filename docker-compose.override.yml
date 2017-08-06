@@ -9,3 +9,8 @@ services:
     volumes:
       - .:/app
     restart: "no"
+
+  scheduler:
+    volumes:
+      - .:/app
+    restart: "no"
