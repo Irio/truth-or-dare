@@ -1,16 +1,22 @@
 version: "3"
 services:
   rabbitmq:
+    logging:
+      driver: json-file
     ports:
       - 5672:5672
     restart: "no"
 
   worker:
+    logging:
+      driver: json-file
+    restart: "no"
     volumes:
       - .:/app
-    restart: "no"
 
   scheduler:
+    logging:
+      driver: json-file
+    restart: "no"
     volumes:
       - .:/app
-    restart: "no"

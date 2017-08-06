@@ -11,10 +11,12 @@ services:
     command: celery -A tasks worker -B -s /tmp/celerybeat-schedule
     depends_on:
       - rabbitmq
-    environment:
-      - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
     env_file:
       - .env
+    environment:
+      - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
+    logging:
+      driver: gcplogs
     restart: unless-stopped
 
   scheduler:
@@ -22,8 +24,10 @@ services:
     command: celery -A tasks beat -s /tmp/celerybeat-schedule --pidfile=/tmp/celerybeat.pid
     depends_on:
       - rabbitmq
-    environment:
-      - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
     env_file:
       - .env
+    environment:
+      - RABBITMQ_URL=pyamqp://guest:guest@rabbitmq:5672//
+    logging:
+      driver: gcplogs
     restart: unless-stopped
